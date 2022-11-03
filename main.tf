@@ -12,8 +12,9 @@ terraform {
 
 provider "aws" {
   region  = "sa-east-1"
-  access_key = TF_VAR_aws_access_secret
-  secret_key = TF_VAR_aws_key_id
+  profile = "aws-cli-terraform"
+  //access_key = TF_VAR_aws_access_secret
+  //secret_key = TF_VAR_aws_key_id
 }
 
 resource "aws_instance" "app_server" {
