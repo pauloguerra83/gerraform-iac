@@ -6,7 +6,7 @@ terraform {
     }
   }
 
-  required_version = ">= 1.2.0"
+  required_version = ">= 1.0.2"
 }
 
 
@@ -15,11 +15,34 @@ provider "aws" {
   profile = "aws-cli-terraform"
 }
 
-resource "aws_instance" "app_server" {
-  ami           = "ami-830c94e3"
-  instance_type = "t2.micro"
 
-  tags = {
+
+resource "aws_sqs_queue" "my_first_sqs" {
+  name = var.sqs_name
+}
+
+resource "aws_sqs_queue_policy" "my_sqs_policy" {
+  
+  queue_url = aws_sqs_queue.my_first_sqs.id
+
+  policy = <<POLICY
+{
+  "Version": "2012-10-17",
+  "Id": "sqspolicy",
+  "Statement": [
+    {
+      "Sid": "First",
+      "Effect": "Allow",
+      "Principal": "*",
+      "Action": "sqs:SendMessage",
+      "Resource": "${aws_sqs_queue.my_first_sqs.arn}"
+    }
+  ]
+}
+POLICY
+
+tags = {
     Name = "gerraform-study"
   }
+
 }
