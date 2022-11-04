@@ -19,6 +19,12 @@ provider "aws" {
 
 resource "aws_sqs_queue" "my_first_sqs" {
   name = var.sqs_name
+
+
+tags = {
+    Name = "gerraform-study"
+}
+
 }
 
 resource "aws_sqs_queue_policy" "my_sqs_policy" {
@@ -41,8 +47,5 @@ resource "aws_sqs_queue_policy" "my_sqs_policy" {
 }
 POLICY
 
-tags = {
-    Name = "gerraform-study"
-  }
 
 }
